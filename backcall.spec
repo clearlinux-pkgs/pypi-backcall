@@ -17,7 +17,7 @@ Requires: backcall-python3
 Requires: backcall-python
 BuildRequires : pbr
 BuildRequires : pip
-BuildRequires : python-dev
+
 BuildRequires : python3-dev
 BuildRequires : setuptools
 
