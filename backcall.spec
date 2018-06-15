@@ -6,7 +6,7 @@
 #
 Name     : backcall
 Version  : 0.1.0
-Release  : 5
+Release  : 6
 URL      : https://pypi.python.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz
 Source0  : https://pypi.python.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz
 Source99 : https://pypi.python.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz.asc
@@ -17,7 +17,6 @@ Requires: backcall-python3
 Requires: backcall-python
 BuildRequires : pbr
 BuildRequires : pip
-
 BuildRequires : python3-dev
 BuildRequires : setuptools
 
@@ -51,7 +50,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522708024
+export SOURCE_DATE_EPOCH=1529091955
 python3 setup.py build -b py3
 
 %install
