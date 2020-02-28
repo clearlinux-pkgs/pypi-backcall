@@ -6,28 +6,55 @@
 #
 Name     : backcall
 Version  : 0.1.0
-Release  : 17
+Release  : 18
 URL      : https://pypi.python.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz
 Source0  : https://pypi.python.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz
-Source99 : https://pypi.python.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz.asc
+Source1  : https://pypi.python.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz.asc
 Summary  : Specifications for callback functions passed in to an API
 Group    : Development/Tools
 License  : BSD-3-Clause
-Requires: backcall-python3
-Requires: backcall-python
-BuildRequires : pbr
-BuildRequires : pip
-BuildRequires : python3-dev
-BuildRequires : setuptools
+Requires: backcall-python = %{version}-%{release}
+Requires: backcall-python3 = %{version}-%{release}
+BuildRequires : buildreq-distutils3
 
 %description
+========
 backcall
-        ========
+========
+
+.. image:: https://travis-ci.org/takluyver/backcall.png?branch=master
+        :target: https://travis-ci.org/takluyver/backcall
+
+Specifications for callback functions passed in to an API
+
+If your code lets other people supply callback functions, it's important to
+specify the function signature you expect, and check that functions support that.
+Adding extra parameters later would break other peoples code unless you're careful.
+
+backcall provides a way of specifying the callback signature using a prototype
+function::
+
+    from backcall import callback_prototype
+    
+    @callback_prototype
+    def handle_ping(sender, delay=None):
+        # Specify positional parameters without a default, and keyword
+        # parameters with a default.
+        pass
+    
+    def register_ping_handler(callback):
+        # This checks and adapts the function passed in:
+        callback = handle_ping(callback)
+        ping_callbacks.append(callback)
+
+If the callback takes fewer parameters than your prototype, *backcall* will wrap
+it in a function that discards the extra arguments. If the callback expects
+more arguments, a TypeError is thrown when it is registered.
 
 %package python
 Summary: python components for the backcall package.
 Group: Default
-Requires: backcall-python3
+Requires: backcall-python3 = %{version}-%{release}
 
 %description python
 python components for the backcall package.
@@ -37,6 +64,7 @@ python components for the backcall package.
 Summary: python3 components for the backcall package.
 Group: Default
 Requires: python3-core
+Provides: pypi(backcall)
 
 %description python3
 python3 components for the backcall package.
@@ -44,18 +72,27 @@ python3 components for the backcall package.
 
 %prep
 %setup -q -n backcall-0.1.0
+cd %{_builddir}/backcall-0.1.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1529091955
-python3 setup.py build -b py3
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1582849304
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
+export MAKEFLAGS=%{?_smp_mflags}
+python3 setup.py build
 
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
