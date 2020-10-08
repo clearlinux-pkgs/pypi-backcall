@@ -6,7 +6,7 @@
 #
 Name     : backcall
 Version  : 0.1.0
-Release  : 19
+Release  : 20
 URL      : https://pypi.python.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz
 Source0  : https://pypi.python.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz
 Source1  : https://pypi.python.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz.asc
@@ -18,38 +18,8 @@ Requires: backcall-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 
 %description
-========
 backcall
-========
-
-.. image:: https://travis-ci.org/takluyver/backcall.png?branch=master
-        :target: https://travis-ci.org/takluyver/backcall
-
-Specifications for callback functions passed in to an API
-
-If your code lets other people supply callback functions, it's important to
-specify the function signature you expect, and check that functions support that.
-Adding extra parameters later would break other peoples code unless you're careful.
-
-backcall provides a way of specifying the callback signature using a prototype
-function::
-
-    from backcall import callback_prototype
-    
-    @callback_prototype
-    def handle_ping(sender, delay=None):
-        # Specify positional parameters without a default, and keyword
-        # parameters with a default.
-        pass
-    
-    def register_ping_handler(callback):
-        # This checks and adapts the function passed in:
-        callback = handle_ping(callback)
-        ping_callbacks.append(callback)
-
-If the callback takes fewer parameters than your prototype, *backcall* will wrap
-it in a function that discards the extra arguments. If the callback expects
-more arguments, a TypeError is thrown when it is registered.
+        ========
 
 %package python
 Summary: python components for the backcall package.
@@ -79,12 +49,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582849304
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1602133193
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
