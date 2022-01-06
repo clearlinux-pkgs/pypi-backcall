@@ -4,7 +4,7 @@
 #
 Name     : pypi-backcall
 Version  : 0.2.0
-Release  : 37
+Release  : 38
 URL      : https://files.pythonhosted.org/packages/a2/40/764a663805d84deee23043e1426a9175567db89c8b3287b5c2ad9f71aa93/backcall-0.2.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/a2/40/764a663805d84deee23043e1426a9175567db89c8b3287b5c2ad9f71aa93/backcall-0.2.0.tar.gz
 Summary  : Specifications for callback functions passed in to an API
@@ -15,7 +15,6 @@ Requires: pypi-backcall-python = %{version}-%{release}
 Requires: pypi-backcall-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 BuildRequires : pypi(flit_core)
-Provides: backcall
 
 %description
 ========
@@ -60,7 +59,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1641410942
+export SOURCE_DATE_EPOCH=1641506782
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
